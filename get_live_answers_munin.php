@@ -112,10 +112,10 @@ function get_connections($bd, $sub, $last_connect_minutes) {
 	$dbh = mysqli_connect($_configuration['db_host'],$_configuration['db_user'],$_configuration['db_password']);
 	if ($inc!==false && $dbh!==false) {
                 $db = $_configuration['main_database'];
-                $sql = "SELECT NOW()";
+                $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
                 $res = mysqli_query($dbh,$sql);
                 $row = mysqli_fetch_row($res);
-		$current_date = $row[0];
+                $current_date = $row[0];
 		//$current_date=date('Y-m-d H:i:s',time());
 		$track_table = $db.'.track_e_attempt';
 		$query = "SELECT count(distinct(question_id)) ".

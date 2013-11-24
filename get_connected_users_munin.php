@@ -102,7 +102,10 @@ function get_connections($bd, $sub, $last_connect_minutes) {
 	$dbh = mysqli_connect($_configuration['db_host'],$_configuration['db_user'],$_configuration['db_password']);
 	if ($inc!==false && $dbh!==false) {
                 $db = $_configuration['main_database'];
-		$current_date=date('Y-m-d H:i:s',time());
+                $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
+                $res = mysqli_query($dbh,$sql);
+                $row = mysqli_fetch_row($res);
+                $current_date = $row[0];
 		$track_online_table = $db.'.track_e_online';
 		$query = "SELECT count(login_user_id) ".
                     " FROM ".$track_online_table .
