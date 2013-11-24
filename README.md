@@ -4,6 +4,10 @@ This repository contains a few interesting scripts for Chamilo administrators
 who want to be informed about what's going on in their Chamilo portals.
 Feel free to download, extend, and contribute back by forking this repository and sending pull requests!
 
+Ideally, once working, the Munin chart will look something like this (here with more than 20 portals on the same server).
+
+![Munin chart for active users by portal](chamilo_active_users-day.png "Munin chart for active users by portal")
+
 # Licensing #
 
 These scripts are available under the GNU/AGPL license. Check the LICENSE file
