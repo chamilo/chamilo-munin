@@ -19,10 +19,10 @@ To install, please follow the few steps below...
 To run the following scripts, you will need:
 * a working munin-node installation
 * the PHP CLI (Command Line Interface) interpreter installed (check that just by launching "php -m" from the command line - if it gives you a list of modules, you're good to go)
-* Chamilo 1.9.x folders (not tested with other versions) located in /var/www/[something]/www/
+* Chamilo 1.9.x folders (should work with version 1.10 as well, but not guaranteed) located in /var/www/[something]/www/
 * to be logged in as administrator (root) or issue all commands with the "sudo" prefix. This is because most of the commands below are actually administration commands, so most of them require administrator privileges
 
-If your configuration doesn't put the Chamilo folders in /var/www/[something]/www/, at this stage, you will have to hack the "&#95munin.php" scripts below to make sure the $bd and $sub variables (around line 50) are configured correctly.
+If your configuration doesn't put the Chamilo folders in /var/www/[something]/www/, at this stage, you will have to hack the "&#95;munin.php" scripts below to make sure the $bd and $sub variables (around line 50) are configured correctly.
 
 ## Store this folder somewhere ##
 
