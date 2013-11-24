@@ -50,7 +50,7 @@ CUT;
 ini_set('error_reporting','E_ALL & ~E_WARNING & ~E_NOTICE');
 $bd = '/var/www';
 $sub = '/www';
-$last_connect_minutes = 2;
+$last_connect_minutes = 5;
 $connections = get_connections($bd, $sub, $last_connect_minutes); 
 $output = '';
 if ( !empty($argv[1]) && $argv[1] == 'config') {
@@ -113,7 +113,7 @@ function get_connections($bd, $sub, $last_connect_minutes) {
 		$query = "SELECT count(distinct(exe_user_id)) ".
                     " FROM ".$track_online_table .
                     " WHERE DATE_ADD(exe_date, ".
-              "INTERVAL 30 MINUTE) >= '".$current_date."'  ";
+              "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
               //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
 		//echo $query."\n";
 		$res = mysqli_query($dbh, $query);
