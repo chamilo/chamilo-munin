@@ -91,8 +91,16 @@ function get_courses($bd, $sub) {
     //skip system directories
     if (substr($dir,0,1)=='.' or $dir == 'lost+found') continue;
     //check the existence of configuration.php
-    if (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
-  	$inc = include_once($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php');
+    $config_file = '';
+    if (is_file($bd.'/'.$dir.$sub.'/config/configuration.php')) {
+        // Chamilo 1.10
+        $config_file = $bd.'/'.$dir.$sub.'/config/configuration.php';
+    } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
+        // Chamilo 1.9
+        $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
+    }
+    if (!empty($config_file)) {
+  	$inc = include_once($config_file);
 	$dbh = mysql_connect($_configuration['db_host'],$_configuration['db_user'],$_configuration['db_password']);
 	if ($inc!==false && $dbh!==false) {
 		$db = $_configuration['main_database'];
