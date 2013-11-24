@@ -118,7 +118,11 @@ function get_registrations($bd, $sub) {
 		}
 echo $num."\n";
 		//echo sprintf("[%7d]",$num)." users connected to ".$_configuration['root_web']." last $last_connect_minutes'\n";
-                $connections[str_replace('.','_',substr($_configuration['root_web'],8,-1))] = $num;
+                $cut_point = 7;
+                if (substr($_configuration['root_web'],0,5) == 'https') {
+                    $cut_point = 8;
+                }
+                $connections[str_replace('.','_',substr($_configuration['root_web'],$cut_point,-1))] = $num;
 		$match_count += $num;
 		mysqli_close($dbh);
 	} else {
