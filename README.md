@@ -1,7 +1,7 @@
 # Munin scripts for Chamilo 1.9.x #
 
 This repository contains a few interesting scripts for Chamilo administrators
-who want to be informed about what's going on in their Chamilo portals.
+who use [Munin](https://github.com/munin-monitoring/munin "Munin on Github") want to be informed about what's going on in their Chamilo portals.
 Feel free to download, extend, and contribute back by forking this repository and sending pull requests!
 
 Ideally, once working, the Munin chart will look something like this (here with more than 20 portals on the same server).
