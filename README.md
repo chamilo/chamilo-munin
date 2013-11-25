@@ -133,4 +133,4 @@ If you got this, then it is likely all your scripts will start drawing charts in
 ## Contact info ##
 
 If you have any question, please use the "Issues" section.
-If you are looking for professional services to extend those scripts or set them up for you, please contact the authors at info@beeznest.com including "Munin" in the topic.
+If you are looking for professional services to extend those scripts or set them up for you, please contact the authors at info@beeznest.com (or @beeznest on Twitter) including "Munin" in the topic.
