@@ -62,8 +62,8 @@ if ( !empty($argv[1]) && $argv[1] == 'config') {
   $output .= "graph_vlabel Registered sessions\n";
   $output .= "graph_scale off\n";
   foreach ($connections as $portal => $num) {
-    $warning = 1000;
-    $critical = 2000;
+    $warning = 100000;
+    $critical = 200000;
     $output .= "portal$portal.label Host $portal\n";
 //    $output .= "portal$portal.type DERIVE\n";
     //$output .= "portal$portal.max 500\n";
