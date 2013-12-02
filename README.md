@@ -114,6 +114,11 @@ that info based on the cron process).
     $ ln -s /usr/local/share/chamilo-munin/get_registered_users_munin_proxy.php chamilo-registered-users
     $ ln -s /usr/local/share/chamilo-munin/get_registered_sessions_munin_proxy.php chamilo-registered-sessions
 
+Or, to make it *really* easy for you to configure, you can launch the setup.php
+script (as root). It will detect where you put the scripts and add the links in
+/etc/munin/plugins/ (make sure the links have to go there on your distribution
+before you execute it).
+
 As you can see, we gave slightly different names to the links than the scripts
 themselves, just to ensure the scripts are called with a "chamilo" prefix and
 are more easily identified in the logs.
