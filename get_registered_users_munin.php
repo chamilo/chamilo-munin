@@ -116,7 +116,6 @@ function get_registrations($bd, $sub) {
 			$row = mysqli_fetch_row($res);
 			$num = $row[0];
 		}
-echo $num."\n";
 		//echo sprintf("[%7d]",$num)." users connected to ".$_configuration['root_web']." last $last_connect_minutes'\n";
                 $cut_point = 7;
                 if (substr($_configuration['root_web'],0,5) == 'https') {
