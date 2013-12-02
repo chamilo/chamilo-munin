@@ -63,6 +63,8 @@ valuable data to Munin, and we want to do that a little bit before the rounded
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_courses_munin.php
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_users_munin.php config
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_users_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_sessions_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_sessions_munin.php
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_answers_munin.php config
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_answers_munin.php
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_exam_users_munin.php config
@@ -114,6 +116,7 @@ that info based on the cron process).
     $ ln -s /usr/local/share/chamilo-munin/get_live_exam_users_munin_proxy.php chamilo-live-exam-users
     $ ln -s /usr/local/share/chamilo-munin/get_registered_courses_munin_proxy.php chamilo-registered-courses
     $ ln -s /usr/local/share/chamilo-munin/get_registered_users_munin_proxy.php chamilo-registered-users
+    $ ln -s /usr/local/share/chamilo-munin/get_registered_sessions_munin_proxy.php chamilo-registered-sessions
 
 As you can see, we gave slightly different names to the links than the scripts
 themselves, just to ensure the scripts are called with a "chamilo" prefix and
