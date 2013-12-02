@@ -57,18 +57,18 @@ the following inside it (we need to execute each script every 5 minutes to give
 valuable data to Munin, and we want to do that a little bit before the rounded
 5 minutes to ensure the data is ready when Munin fetches it):
 
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_connected_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_connected_users_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_courses_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_courses_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_users_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_sessions_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_registered_sessions_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_answers_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_answers_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_exam_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	root /usr/local/share/chamilo-munin/get_live_exam_users_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php
 
 Each time, we also call the "config" part of the plugin. Although this is not 
 something that changes very often, it just writes an "almost-static" 1-10KB file
@@ -77,10 +77,6 @@ periodicity of these files to 1 day, if you like. This being said, Munin needs
 this file to be there, so make sure you don't clean your /tmp/ directory and
 then regenerate those files only the next day or so, as your charts would be 
 empty during that time.
-
-It shouldn't be unnecessary to execute those scripts as root. Feel free to 
-update that if you are sure of what users can access whatever folder you put
-your Munin scripts in.
 
 While you are configuring the rest, below, these scripts are likely to already 
 be run once, but if you want to make sure they can, just execute the scripts
