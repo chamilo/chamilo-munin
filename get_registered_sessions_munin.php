@@ -106,7 +106,7 @@ function get_sessions($bd, $sub) {
 		$db = $_configuration['main_database'];
 		$current_date=date('Y-m-d H:i:s',time());
 		$user_table = $db.'.session';
-		$query = "SELECT count(code) ".
+		$query = "SELECT count(id) ".
                     " FROM ".$user_table ;
 		//echo $query."\n";
 		$res = mysql_query($query);
