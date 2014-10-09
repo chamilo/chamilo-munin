@@ -1,5 +1,5 @@
-Chamilo Munin 0.4
-=================
+Chamilo Munin 0.4 (20141009)
+============================
 * Fix proxy scripts to load relative path if file not found
 * Add flexibility to copy connected_users script for different time versions
 * Changed default connected_users time window to 5 minutes (instead of 1)
