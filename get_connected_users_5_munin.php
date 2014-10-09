@@ -52,7 +52,7 @@ $bd = '/var/www';
 $sub = '/www';
 // Get the number of minutes from the name of this script
 // (this requires maintaining the same name structure)
-$scriptNameParts = preg_split('/_/', $argv[0]);
+$scriptNameParts = preg_split('/_/', __FILE__);
 $last_connect_minutes = $scriptNameParts[count($scriptNameParts)-2];
 if (intval($last_connect_minutes) != $last_connect_minutes) {
     $last_connect_minutes = 5;
