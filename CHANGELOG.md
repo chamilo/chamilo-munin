@@ -1,3 +1,7 @@
+Chamilo Munin 0.6 (20141009)
+============================
+* Fix issue with script name in new feature of get_connected_users_x
+
 Chamilo Munin 0.5 (20141009)
 ============================
 * Add mechanism to guess number of minutes from the script name in get_connected_users
