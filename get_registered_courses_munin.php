@@ -62,8 +62,8 @@ if ( !empty($argv[1]) && $argv[1] == 'config') {
   $output .= "graph_vlabel Registered courses\n";
   $output .= "graph_scale off\n";
   foreach ($connections as $portal => $num) {
-    $warning = 1000;
-    $critical = 2000;
+    $warning = 4000;
+    $critical = 5000;
     $output .= "portal$portal.label Host $portal\n";
 //    $output .= "portal$portal.type DERIVE\n";
     //$output .= "portal$portal.max 500\n";
