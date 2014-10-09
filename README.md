@@ -57,8 +57,8 @@ the following inside it (we need to execute each script every 5 minutes to give
 valuable data to Munin, and we want to do that a little bit before the rounded
 5 minutes to ensure the data is ready when Munin fetches it):
 
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_munin.php
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php config
+    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php config
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php
     3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php config
@@ -107,7 +107,7 @@ ones that recover the information for you (the non-proxy ones will generate
 that info based on the cron process).
 
     $ cd /etc/munin/plugins/
-    $ ln -s /usr/local/share/chamilo-munin/get_connected_users_munin_proxy.php chamilo-connected-users
+    $ ln -s /usr/local/share/chamilo-munin/get_connected_users_5_munin_proxy.php chamilo-connected-users-5
     $ ln -s /usr/local/share/chamilo-munin/get_live_answers_munin_proxy.php chamilo-live-answers
     $ ln -s /usr/local/share/chamilo-munin/get_live_exam_users_munin_proxy.php chamilo-live-exam-users
     $ ln -s /usr/local/share/chamilo-munin/get_registered_courses_munin_proxy.php chamilo-registered-courses
@@ -122,6 +122,19 @@ before you execute it).
 As you can see, we gave slightly different names to the links than the scripts
 themselves, just to ensure the scripts are called with a "chamilo" prefix and
 are more easily identified in the logs.
+
+The get_connected_users script is built so as to allow to multiply the charts, 
+for example checking for connected users in the last 5, 30 and 120 minutes.
+To do this, just make a copy of the script with "5" in the name to other
+scripts with the same name except for the 5 (both "munin" and "munin_proxy"
+scripts). The scripts will change depending on their name.
+
+For example:
+    $ cd /usr/local/share/chamilo-munin
+    $ cp get_connected_users_5_munin.php get_connected_users_30_munin.php
+    $ cp get_connected_users_5_munin_proxy.php get_connected_users_30_munin_proxy.php
+    $ cd /etc/munin/plugins/
+    $ ln -s /usr/local/share/chamilo-munin/get_connected_users_30_munin_proxy.php chamilo-connected-users-30
 
 ## Checking your setup ##
 
