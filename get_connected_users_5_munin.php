@@ -50,7 +50,13 @@ CUT;
 ini_set('error_reporting','E_ALL & ~E_WARNING & ~E_NOTICE');
 $bd = '/var/www';
 $sub = '/www';
-$last_connect_minutes = 1;
+// Get the number of minutes from the name of this script
+// (this requires maintaining the same name structure)
+$scriptNameParts = preg_split('/_/', $argv[0]);
+$last_connect_minutes = $scriptNameParts[count($scriptNameParts)-2];
+if (intval($last_connect_minutes) != $last_connect_minutes) {
+    $last_connect_minutes = 5;
+}
 $connections = get_connections($bd, $sub, $last_connect_minutes); 
 $output = '';
 if ( !empty($argv[1]) && $argv[1] == 'config') {
@@ -71,7 +77,7 @@ if ( !empty($argv[1]) && $argv[1] == 'config') {
     $output .= "portal$portal.critical 12500\n";
     $output .= "portal$portal.draw LINE2\n";
   }
-  file_put_contents('/tmp/get_connected_users_config',$output);
+  file_put_contents('/tmp/get_connected_users_config_'.$last_connect_minutes, $output);
   exit;
 }
 if (is_array($connections) && count($connections)>0) {
@@ -79,7 +85,7 @@ if (is_array($connections) && count($connections)>0) {
     $output .= "portal$portal.value $num\n";
   }
 }
-file_put_contents('/tmp/get_connected_users',$output);
+file_put_contents('/tmp/get_connected_users_'.$last_connect_minutes, $output);
 
 function get_connections($bd, $sub, $last_connect_minutes) {
   $match_count=0;

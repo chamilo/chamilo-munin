@@ -1,3 +1,7 @@
+Chamilo Munin 0.5 (20141009)
+============================
+* Add mechanism to guess number of minutes from the script name in get_connected_users
+
 Chamilo Munin 0.4 (20141009)
 ============================
 * Fix proxy scripts to load relative path if file not found

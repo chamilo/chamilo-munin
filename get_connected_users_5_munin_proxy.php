@@ -47,7 +47,14 @@ AGPLv3
 =cut
 CUT;
 
-$last_connect_minutes = 5;
+// Get the number of minutes from the name of this script
+// (this requires maintaining the same name structure)
+$scriptNameParts = preg_split('/_/', $argv[0]);
+$last_connect_minutes = $scriptNameParts[count($scriptNameParts)-3];
+if (intval($last_connect_minutes) != $last_connect_minutes) {
+    $last_connect_minutes = 5;
+}
+die($last_connect_minutes);
 if ( !empty($argv[1]) && $argv[1] == 'config') {
   // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
   if (!is_file('/tmp/get_connected_users_config_'.$last_connect_minutes)) {
