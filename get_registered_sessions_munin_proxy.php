@@ -50,13 +50,13 @@ CUT;
 if ( !empty($argv[1]) && $argv[1] == 'config') {
   // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
   if (!is_file('/tmp/get_registered_sessions_config')) {
-    @exec('/root/php/get_sessions_munin.php config');
+    @exec(__DIR__.'/get_registered_sessions_munin.php config');
   }
   readfile('/tmp/get_registered_sessions_config');
   exit;
 }
 if (!is_file('/tmp/get_registered_sessions')) {
-  @exec('/root/php/get_sessions_munin.php');
+  @exec(__DIR__.'/get_registered_sessions_munin.php');
 }
 readfile('/tmp/get_registered_sessions');
 

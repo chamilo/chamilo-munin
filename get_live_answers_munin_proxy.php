@@ -50,13 +50,13 @@ CUT;
 if ( !empty($argv[1]) && $argv[1] == 'config') {
   // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
   if (!is_file('/tmp/get_live_answers_config')) {
-    @exec('/root/php/get_live_answers.php config');
+    @exec(__DIR__.'/get_live_answers_munin.php config');
   }
   readfile('/tmp/get_live_answers_config');
   exit;
 }
 if (!is_file('/tmp/get_live_answers')) {
-  @exec('/root/php/get_live_answers.php');
+  @exec(__DIR__.'/get_live_answers_munin.php');
 }
 readfile('/tmp/get_live_answers');
 

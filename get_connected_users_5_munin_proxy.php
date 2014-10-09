@@ -47,16 +47,17 @@ AGPLv3
 =cut
 CUT;
 
+$last_connect_minutes = 5;
 if ( !empty($argv[1]) && $argv[1] == 'config') {
   // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
-  if (!is_file('/tmp/get_connected_users_config')) {
-    @exec('/root/php/get_connected_users.php config');
+  if (!is_file('/tmp/get_connected_users_config_'.$last_connect_minutes)) {
+    @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php config');
   }
-  readfile('/tmp/get_connected_users_config');
+  readfile('/tmp/get_connected_users_config_'.$last_connect_minutes);
   exit;
 }
-if (!is_file('/tmp/get_connected_users')) {
-  @exec('/root/php/get_connected_users.php');
+if (!is_file('/tmp/get_connected_users_'.$last_connect_minutes)) {
+  @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php');
 }
-readfile('/tmp/get_connected_users');
+readfile('/tmp/get_connected_users_'.$last_connect_minutes);
 

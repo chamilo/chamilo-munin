@@ -50,13 +50,13 @@ CUT;
 if ( !empty($argv[1]) && $argv[1] == 'config') {
   // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
   if (!is_file('/tmp/get_live_exam_users_config')) {
-    @exec('/root/php/get_live_exam_users.php config');
+    @exec(__DIR__.'/get_live_exam_users_munin.php config');
   }
   readfile('/tmp/get_live_exam_users_config');
   exit;
 }
 if (!is_file('/tmp/get_live_exam_users')) {
-  @exec('/root/php/get_live_exam_users.php');
+  @exec(__DIR__.'/get_live_exam_users_munin.php');
 }
 readfile('/tmp/get_live_exam_users');
 
