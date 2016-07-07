@@ -92,9 +92,9 @@ function get_sessions($bd, $sub) {
     if (substr($dir,0,1)=='.' or $dir == 'lost+found') continue;
     //check the existence of configuration.php
     $config_file = '';
-    if (is_file($bd.'/'.$dir.$sub.'/config/configuration.php')) {
+    if (is_file($bd.'/'.$dir.$sub.'/app/config/configuration.php')) {
         // Chamilo 1.10
-        $config_file = $bd.'/'.$dir.$sub.'/config/configuration.php';
+        $config_file = $bd.'/'.$dir.$sub.'/app/config/configuration.php';
     } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
         // Chamilo 1.9
         $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
