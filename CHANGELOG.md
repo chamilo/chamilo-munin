@@ -1,3 +1,7 @@
+Chamilo Munin 2.0 (20160714)
+============================
+* Update for Chamilo 1.10 and PHP 7
+
 Chamilo Munin 0.6 (20141009)
 ============================
 * Fix issue with script name in new feature of get_connected_users_x

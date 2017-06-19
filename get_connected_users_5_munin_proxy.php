@@ -50,20 +50,20 @@ CUT;
 // Get the number of minutes from the name of this script
 // (this requires maintaining the same name structure)
 $scriptNameParts = preg_split('/_/', __FILE__);
-$last_connect_minutes = $scriptNameParts[count($scriptNameParts)-3];
+$last_connect_minutes = $scriptNameParts[count($scriptNameParts) - 3];
 if (intval($last_connect_minutes) != $last_connect_minutes) {
     $last_connect_minutes = 5;
 }
-if ( !empty($argv[1]) && $argv[1] == 'config') {
-  // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
-  if (!is_file('/tmp/get_connected_users_config_'.$last_connect_minutes)) {
-    @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php config');
-  }
-  readfile('/tmp/get_connected_users_config_'.$last_connect_minutes);
-  exit;
+if (!empty($argv[1]) && $argv[1] == 'config') {
+    // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
+    if (!is_file('/tmp/get_connected_users_config_'.$last_connect_minutes)) {
+        @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php config');
+    }
+    readfile('/tmp/get_connected_users_config_'.$last_connect_minutes);
+    exit;
 }
 if (!is_file('/tmp/get_connected_users_'.$last_connect_minutes)) {
-  @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php');
+    @exec(__DIR__.'/get_connected_users_'.$last_connect_minutes.'_munin.php');
 }
 readfile('/tmp/get_connected_users_'.$last_connect_minutes);
 

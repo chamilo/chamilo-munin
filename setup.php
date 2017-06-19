@@ -19,13 +19,13 @@ $list = scandir(__DIR__);
  * Add links
  */
 foreach ($list as $entry) {
-    if (substr($entry,0,1) == '.' or substr($entry,-10) != '_proxy.php') {
+    if (substr($entry, 0, 1) == '.' or substr($entry, -10) != '_proxy.php') {
         continue;
     }
     // transform name
     $symlink = preg_replace('/^get_/', 'chamilo-', $entry);
     $symlink = preg_replace('/_/', '-', $symlink);
-    $symlink = preg_replace('/-munin-proxy.php$/','',$symlink);
+    $symlink = preg_replace('/-munin-proxy.php$/', '', $symlink);
     exec('ln -s '.__DIR__.'/'.$entry.' '.$dest.'/'.$symlink);
     //echo $entry."-> $symlink\n";
 }

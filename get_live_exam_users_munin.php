@@ -47,104 +47,108 @@ AGPLv3
 =cut
 CUT;
 
-ini_set('error_reporting','E_ALL & ~E_WARNING & ~E_NOTICE');
+ini_set('error_reporting', 'E_ALL & ~E_WARNING & ~E_NOTICE');
 $bd = '/var/www';
 $sub = '/www';
 $last_connect_minutes = 5;
-$connections = get_connections($bd, $sub, $last_connect_minutes); 
+$connections = get_connections($bd, $sub, $last_connect_minutes);
 $output = '';
-if ( !empty($argv[1]) && $argv[1] == 'config') {
-  // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
-  $output .= "graph_title Chamilo live exam users v2\n";
-  $output .= "graph_args --lower-limit 0\n";
-  $output .= "graph_category chamilo\n";
-  $output .= "graph_info This graph shows the number of users taking a live exam on Chamilo portals over time.\n";
-  $output .= "graph_vlabel Users in last $last_connect_minutes min\n";
-  $output .= "graph_scale off\n";
-  $total = 0;
-  foreach ($connections as $portal => $num) {
-    $total += $num;
-  }
-  $connections['Total'] = $total;
-  foreach ($connections as $portal => $num) {
-    $output .= "portal$portal.label Host $portal\n";
+if (!empty($argv[1]) && $argv[1] == 'config') {
+    // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
+    $output .= "graph_title Chamilo live exam users v2\n";
+    $output .= "graph_args --lower-limit 0\n";
+    $output .= "graph_category chamilo\n";
+    $output .= "graph_info This graph shows the number of users taking a live exam on Chamilo portals over time.\n";
+    $output .= "graph_vlabel Users in last $last_connect_minutes min\n";
+    $output .= "graph_scale off\n";
+    $total = 0;
+    foreach ($connections as $portal => $num) {
+        $total += $num;
+    }
+    $connections['Total'] = $total;
+    foreach ($connections as $portal => $num) {
+        $output .= "portal$portal.label Host $portal\n";
 //    echo "portal$portal.type DERIVE\n";
-    //echo "portal$portal.max 500\n";
+        //echo "portal$portal.max 500\n";
 //    echo "portal$portal.min 0\n";
 //    echo "portal$portal.max 500\n";
-    $output .= "portal$portal.warning 8000\n";
-    $output .= "portal$portal.critical 12500\n";
-    $output .= "portal$portal.draw LINE2\n";
-  }
-  file_put_contents('/tmp/get_live_exam_users_config',$output);
-  exit;
-}
-if (is_array($connections) && count($connections)>0) {
-  $total = 0;
-  foreach ($connections as $portal => $num) {
-    $total += $num;
-  }
-  $connections['Total'] = $total;
-  foreach ($connections as $portal => $num) {
-    $output .= "portal$portal.value $num\n";
-  }
-}
-file_put_contents('/tmp/get_live_exam_users',$output);
-
-function get_connections($bd, $sub, $last_connect_minutes) {
-  $match_count=0;
-  $connections = array();
-  $list = scandir($bd);
-  foreach ($list as $dir) {
-    //skip system directories
-    if (substr($dir,0,1)=='.' or $dir == 'lost+found') continue;
-    //check the existence of configuration.php
-    $config_file = '';
-    if (is_file($bd.'/'.$dir.$sub.'/app/config/configuration.php')) {
-        // Chamilo 1.10
-        $config_file = $bd.'/'.$dir.$sub.'/app/config/configuration.php';
-    } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
-        // Chamilo 1.9
-        $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
+        $output .= "portal$portal.warning 8000\n";
+        $output .= "portal$portal.critical 12500\n";
+        $output .= "portal$portal.draw LINE2\n";
     }
-    if (!empty($config_file)) {
-  	$inc = include_once($config_file);
-	$dbh = mysqli_connect($_configuration['db_host'],$_configuration['db_user'],$_configuration['db_password']);
-	if ($inc!==false && $dbh!==false) {
+    file_put_contents('/tmp/get_live_exam_users_config', $output);
+    exit;
+}
+if (is_array($connections) && count($connections) > 0) {
+    $total = 0;
+    foreach ($connections as $portal => $num) {
+        $total += $num;
+    }
+    $connections['Total'] = $total;
+    foreach ($connections as $portal => $num) {
+        $output .= "portal$portal.value $num\n";
+    }
+}
+file_put_contents('/tmp/get_live_exam_users', $output);
+
+function get_connections($bd, $sub, $last_connect_minutes)
+{
+    $match_count = 0;
+    $connections = array();
+    $list = scandir($bd);
+    foreach ($list as $dir) {
+        //skip system directories
+        if (substr($dir, 0, 1) == '.' or $dir == 'lost+found') {
+            continue;
+        }
+        //check the existence of configuration.php
+        $config_file = '';
+        if (is_file($bd.'/'.$dir.$sub.'/app/config/configuration.php')) {
+            // Chamilo 1.10
+            $config_file = $bd.'/'.$dir.$sub.'/app/config/configuration.php';
+        } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
+            // Chamilo 1.9
+            $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
+        }
+        if (!empty($config_file)) {
+            $inc = include_once($config_file);
+            $dbh = mysqli_connect($_configuration['db_host'], $_configuration['db_user'],
+                $_configuration['db_password']);
+            if ($inc !== false && $dbh !== false) {
                 $db = $_configuration['main_database'];
                 $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
-                $res = mysqli_query($dbh,$sql);
+                $res = mysqli_query($dbh, $sql);
                 $row = mysqli_fetch_row($res);
                 $current_date = $row[0];
-		//$current_date=date('Y-m-d H:i:s',time());
-		$track_online_table = $db.'.track_e_exercices';
-		$query = "SELECT count(distinct(exe_user_id)) ".
-                    " FROM ".$track_online_table .
+                //$current_date=date('Y-m-d H:i:s',time());
+                $track_online_table = $db.'.track_e_exercices';
+                $query = "SELECT count(distinct(exe_user_id)) ".
+                    " FROM ".$track_online_table.
                     " WHERE DATE_ADD(exe_date, ".
-              "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
-              //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
-		//echo $query."\n";
-		$res = mysqli_query($dbh, $query);
-		if ( $res === false ) {
-			$num = 0;
-			//echo "          There was a query error for the following portal\n";
-		} else {
-			$row = mysqli_fetch_row($res);
-			$num = $row[0];
-		}
-		//echo sprintf("[%7d]",$num)." users connected to ".$_configuration['root_web']." last $last_connect_minutes'\n";
+                    "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
+                //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
+                //echo $query."\n";
+                $res = mysqli_query($dbh, $query);
+                if ($res === false) {
+                    $num = 0;
+                    //echo "          There was a query error for the following portal\n";
+                } else {
+                    $row = mysqli_fetch_row($res);
+                    $num = $row[0];
+                }
+                //echo sprintf("[%7d]",$num)." users connected to ".$_configuration['root_web']." last $last_connect_minutes'\n";
                 $cut_point = 7;
-                if (substr($_configuration['root_web'],0,5) == 'https') {
+                if (substr($_configuration['root_web'], 0, 5) == 'https') {
                     $cut_point = 8;
                 }
-                $connections[str_replace('.','_',substr($_configuration['root_web'],$cut_point,-1))] = $num;
-		$match_count += $num;
-		mysqli_close($dbh);
-	} else {
-		//echo "$bd/$dir$sub:could not open configuration.php or database:\n";
-	}
+                $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
+                $match_count += $num;
+                mysqli_close($dbh);
+            } else {
+                //echo "$bd/$dir$sub:could not open configuration.php or database:\n";
+            }
+        }
     }
-  }
-  return $connections;
+    return $connections;
 }
 

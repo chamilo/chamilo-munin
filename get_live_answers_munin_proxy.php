@@ -47,16 +47,16 @@ AGPLv3
 =cut
 CUT;
 
-if ( !empty($argv[1]) && $argv[1] == 'config') {
-  // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
-  if (!is_file('/tmp/get_live_answers_config')) {
-    @exec(__DIR__.'/get_live_answers_munin.php config');
-  }
-  readfile('/tmp/get_live_answers_config');
-  exit;
+if (!empty($argv[1]) && $argv[1] == 'config') {
+    // Global Munin attr., see http://munin-monitoring.org/wiki/protocol-config
+    if (!is_file('/tmp/get_live_answers_config')) {
+        @exec(__DIR__.'/get_live_answers_munin.php config');
+    }
+    readfile('/tmp/get_live_answers_config');
+    exit;
 }
 if (!is_file('/tmp/get_live_answers')) {
-  @exec(__DIR__.'/get_live_answers_munin.php');
+    @exec(__DIR__.'/get_live_answers_munin.php');
 }
 readfile('/tmp/get_live_answers');
 

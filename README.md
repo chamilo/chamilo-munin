@@ -1,10 +1,13 @@
-# Munin scripts for Chamilo 1.9.x #
+# Munin scripts for Chamilo 1.11.x #
 
 This repository contains a few interesting scripts for Chamilo administrators
-who use [Munin](https://github.com/munin-monitoring/munin "Munin on Github") want to be informed about what's going on in their Chamilo portals.
-Feel free to download, extend, and contribute back by forking this repository and sending pull requests!
+who use [Munin](https://github.com/munin-monitoring/munin "Munin on Github") 
+and want to be informed about what's going on in their Chamilo portals.
+Feel free to download, extend, and contribute back by forking this repository
+and sending pull requests!
 
-Ideally, once working, the Munin chart will look something like this (here with more than 20 portals on the same server).
+Ideally, once working, the Munin chart will look something like this (here 
+with more than 20 portals on the same server).
 
 ![Munin chart for active users by portal](chamilo_active_users-day.png "Munin chart for active users by portal")
 
@@ -12,7 +15,12 @@ Ideally, once working, the Munin chart will look something like this (here with 
 
 These scripts are available under the GNU/AGPL license. Check the LICENSE file
 for details.
-Between other things, it is expected for you to contribute any modification or derived work from these scripts you made for yourself, to anyone able to access the resulting charts and kindly asking you to provide the code for the modifications. This is to ensure a snowball effect whereby you save some time downloading these scripts, and in return make others save time by sharing your own work.
+Between other things, it is expected for you to contribute any modification 
+or derived work from these scripts you made for yourself, to anyone able to 
+access the resulting charts and kindly asking you to provide the code for 
+the modifications. This is to ensure a snowball effect whereby you save some 
+time downloading these scripts, and in return make others save time by sharing
+your own work.
 
 # Installation #
 
@@ -23,10 +31,14 @@ To install, please follow the few steps below...
 To run the following scripts, you will need:
 * a working munin-node installation
 * the PHP CLI (Command Line Interface) interpreter installed (check that just by launching "php -m" from the command line - if it gives you a list of modules, you're good to go)
+* support for PHP's PDO extension
 * Chamilo 1.9.x, 1.10.x or 1.11.x folders (should work with version 2.0 as well, but not guaranteed) located in /var/www/[something]/www/. If this isn't the structure of your directories, you'll have to change the first variables in all &#95;munin.php files) 
 * to be logged in as administrator (root) or issue all commands with the "sudo" prefix. This is because most of the commands below are actually administration commands, so most of them require administrator privileges
 
-If your configuration doesn't put the Chamilo folders in /var/www/[something]/www/, at this stage, you will have to hack the "&#95;munin.php" scripts below to make sure the $bd and $sub variables (around line 50) are configured correctly.
+If your configuration does not put the Chamilo folders in
+ /var/www/[something]/www/, at this stage, you will have to hack the 
+ "&#95;munin.php" scripts below to make sure the $bd and $sub variables 
+ (around line 50) are configured correctly.
 
 ## Store this folder somewhere ##
 
@@ -138,14 +150,16 @@ For example:
 
 ## Checking your setup ##
 
-If you have configured everything correctly, you should now be able to issue a munin-run command and get results:
+If you have configured everything correctly, you should now be able to issue 
+a munin-run command and get results:
 
     $ munin-run chamilo-connected-users
     portal/portal1.chamilo.org.value 15
     portal/portal2.chamilo.org.value 214
     portal/portal3.chamilo.org.value 28
 
-If you got this, then it is likely all your scripts will start drawing charts in the next 5-10 minutes. Well done!
+If you got this, then it is likely all your scripts will start drawing charts 
+in the next 5-10 minutes. Well done!
 
 ## Contact info ##
 
