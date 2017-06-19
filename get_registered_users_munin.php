@@ -96,40 +96,36 @@ function get_registrations($bd, $sub)
         //check the existence of configuration.php
         $config_file = '';
         if (is_file($bd.'/'.$dir.$sub.'/app/config/configuration.php')) {
-            // Chamilo 1.10
+            // Chamilo 1.10+
             $config_file = $bd.'/'.$dir.$sub.'/app/config/configuration.php';
         } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
             // Chamilo 1.9
             $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
         }
         if (!empty($config_file)) {
+            $_configuration = [];
             $inc = include_once($config_file);
-            $dbh = mysqli_connect($_configuration['db_host'], $_configuration['db_user'],
-                $_configuration['db_password']);
+            $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
+            try {
+                $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
+            } catch (PDOException $e) {
+                die('Failed to connect to database: '.$e->getMessage());
+            }
             if ($inc !== false && $dbh !== false) {
-                $db = $_configuration['main_database'];
-                $current_date = date('Y-m-d H:i:s', time());
-                $user_table = $db.'.user';
-                $query = "SELECT count(user_id) ".
-                    " FROM ".$user_table;
-                //echo $query."\n";
-                $res = mysqli_query($dbh, $query);
+                $query = "SELECT count(user_id) FROM user";
+                $res = $dbh->query($query);
                 if ($res === false) {
                     $num = 0;
                 } else {
-                    $row = mysqli_fetch_row($res);
+                    $row = $res->fetch();
                     $num = $row[0];
                 }
-                //echo sprintf("[%7d]",$num)." users connected to ".$_configuration['root_web']." last $last_connect_minutes'\n";
                 $cut_point = 7;
                 if (substr($_configuration['root_web'], 0, 5) == 'https') {
                     $cut_point = 8;
                 }
                 $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
                 $match_count += $num;
-                mysqli_close($dbh);
-            } else {
-                //echo "$bd/$dir$sub:could not open configuration.php or database:\n";
             }
         }
     }

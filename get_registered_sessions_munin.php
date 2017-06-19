@@ -96,29 +96,31 @@ function get_sessions($bd, $sub)
         //check the existence of configuration.php
         $config_file = '';
         if (is_file($bd.'/'.$dir.$sub.'/app/config/configuration.php')) {
-            // Chamilo 1.10
+            // Chamilo 1.10+
             $config_file = $bd.'/'.$dir.$sub.'/app/config/configuration.php';
         } elseif (is_file($bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php')) {
             // Chamilo 1.9
             $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
         }
         if (!empty($config_file)) {
+            $_configuration = [];
             $inc = include_once($config_file);
-            $dbh = mysql_connect($_configuration['db_host'], $_configuration['db_user'],
-                $_configuration['db_password']);
+            $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
+            try {
+                $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
+            } catch (PDOException $e) {
+                die('Failed to connect to database: '.$e->getMessage());
+            }
             if ($inc !== false && $dbh !== false) {
-                $db = $_configuration['main_database'];
-                $current_date = date('Y-m-d H:i:s', time());
-                $user_table = $db.'.session';
+                $user_table = 'session';
                 $query = "SELECT count(id) ".
                     " FROM ".$user_table;
-                //echo $query."\n";
-                $res = mysql_query($query);
+                $res = $dbh->query($query);
                 if ($res === false) {
                     $num = 0;
                     //echo "          There was a query error for the following portal\n";
                 } else {
-                    $row = mysql_fetch_row($res);
+                    $row = $res->fetch();
                     $num = $row[0];
                 }
                 $cut_point = 7;
@@ -127,7 +129,6 @@ function get_sessions($bd, $sub)
                 }
                 $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
                 $match_count += $num;
-                mysql_close($dbh);
             } else {
                 //echo "$bd/$dir$sub:could not open configuration.php or database:\n";
             }

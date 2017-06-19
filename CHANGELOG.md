@@ -1,3 +1,7 @@
+Chamilo Munin 2.1 (20170619)
+============================
+* Use PDO for database connections to avoid issues with PHP 7.1
+
 Chamilo Munin 2.0 (20160714)
 ============================
 * Update for Chamilo 1.10 and PHP 7
