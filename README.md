@@ -107,6 +107,8 @@ following:
 ...should give you some data already (greater than 0 if your Chamilo portals
 are already running).
 
+Also, make sure the "munin" user can actually execute those scripts. If you don't see any result coming into /tmp, change the "munin" user in the cron file to root.
+
 ## Symlinks ##
 
 Munin (at least in well-organized distributions) works by symlinking (symbolic 
