@@ -117,7 +117,8 @@ function get_connections($bd, $sub, $last_connect_minutes)
             try {
                 $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
             } catch (PDOException $e) {
-                die('Failed to connect to database: '.$e->getMessage());
+                error_log('Failed to connect to database: '.$e->getMessage());
+                continue;
             }
             if ($inc !== false && $dbh !== false) {
                 $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";

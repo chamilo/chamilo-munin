@@ -108,12 +108,13 @@ function get_connections($bd, $sub, $last_connect_minutes)
         }
         if (!empty($config_file)) {
             $_configuration = [];
-            $inc = include_once($config_file);
+            $inc = require_once($config_file);
             $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
             try {
                 $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
             } catch (PDOException $e) {
-                die('Failed to connect to database: '.$e->getMessage());
+                error_log('Failed to connect to database '.$_configuration['main_database'].': '.$e->getMessage());
+                continue;
             }
             if ($inc !== false && $dbh !== false) {
                 $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
