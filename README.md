@@ -161,6 +161,11 @@ a munin-run command and get results:
 If you got this, then it is likely all your scripts will start drawing charts 
 in the next 5-10 minutes. Well done!
 
+## Notes ##
+
+The Virtual Chamilo plugin is not supported by this module. As such, if a portal using Virtual Chamilo is detected
+(by scanning ) for the corresponding lines in configuration.php, it will simply be ignored.
+
 ## Contact info ##
 
 If you have any question, please use the "Issues" section.

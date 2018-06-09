@@ -106,9 +106,14 @@ function get_connections($bd, $sub, $last_connect_minutes)
             // Chamilo 1.9
             $config_file = $bd.'/'.$dir.$sub.'/main/inc/conf/configuration.php';
         }
-        if (!empty($config_file)) {
+        if (!empty($config_file) && is_file($config_file) && is_readable($config_file)) {
             $_configuration = [];
-            $inc = require_once($config_file);
+            // Virtual Chamilo plugin not supported yet, skip such portals
+            $configRaw = file_get_contents($config_file);
+            if (preg_match('/Virtual::/', $configRaw)) {
+                continue;
+            }
+            $inc = include_once($config_file);
             $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
             try {
                 $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
