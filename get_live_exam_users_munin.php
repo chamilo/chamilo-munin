@@ -132,7 +132,7 @@ function get_connections($bd, $sub, $last_connect_minutes)
                 $current_date = $row[0];
                 $track_online_table = 'track_e_exercices';
                 // Make sure the right table is selected (exercices in 1.9.* and exercises after)
-                $vc = version_compare($_configuration['software_version'], '1.10.0');
+                $vc = version_compare($_configuration['system_version'], '1.10.0');
                 if ($vc >= 0) {
                     $track_online_table = 'track_e_exercises';
                 }
