@@ -110,7 +110,7 @@ function get_registrations($bd, $sub)
                 continue;
             }
             $inc = include_once($config_file);
-            if (!empty($_configuration['user']) && !empty($_configuration['main_database'])) {
+            if (!empty($_configuration['db_user']) && !empty($_configuration['main_database'])) {
                 $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
                 try {
                     $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
