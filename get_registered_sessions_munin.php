@@ -110,33 +110,35 @@ function get_sessions($bd, $sub)
                 continue;
             }
             $inc = include_once($config_file);
-            $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
-            try {
-                $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
-            } catch (PDOException $e) {
-                error_log('Failed to connect to database: '.$e->getMessage());
-                continue;
-            }
-            if ($inc !== false && $dbh !== false) {
-                $user_table = 'session';
-                $query = "SELECT count(id) ".
-                    " FROM ".$user_table;
-                $res = $dbh->query($query);
-                if ($res === false) {
-                    $num = 0;
-                    //echo "          There was a query error for the following portal\n";
+            if (!empty($_configuration['user']) && !empty($_configuration['main_database'])) {
+                $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
+                try {
+                    $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
+                } catch (PDOException $e) {
+                    error_log('Failed to connect to database: '.$e->getMessage());
+                    continue;
+                }
+                if ($inc !== false && $dbh !== false) {
+                    $user_table = 'session';
+                    $query = "SELECT count(id) ".
+                        " FROM ".$user_table;
+                    $res = $dbh->query($query);
+                    if ($res === false) {
+                        $num = 0;
+                        //echo "          There was a query error for the following portal\n";
+                    } else {
+                        $row = $res->fetch();
+                        $num = $row[0];
+                    }
+                    $cut_point = 7;
+                    if (substr($_configuration['root_web'], 0, 5) == 'https') {
+                        $cut_point = 8;
+                    }
+                    $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
+                    $match_count += $num;
                 } else {
-                    $row = $res->fetch();
-                    $num = $row[0];
+                    //echo "$bd/$dir$sub:could not open configuration.php or database:\n";
                 }
-                $cut_point = 7;
-                if (substr($_configuration['root_web'], 0, 5) == 'https') {
-                    $cut_point = 8;
-                }
-                $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
-                $match_count += $num;
-            } else {
-                //echo "$bd/$dir$sub:could not open configuration.php or database:\n";
             }
         }
     }

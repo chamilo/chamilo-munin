@@ -118,38 +118,40 @@ function get_connections($bd, $sub, $last_connect_minutes)
                 continue;
             }
             $inc = include_once($config_file);
-            $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
-            try {
-                $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
-            } catch (PDOException $e) {
-                error_log('Failed to connect to database: '.$e->getMessage());
-                continue;
-            }
-            if ($inc !== false && $dbh !== false) {
-                $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
-                $res = $dbh->query($sql);
-                $row = $res->fetch();
-                $current_date = $row[0];
-                //$current_date=date('Y-m-d H:i:s',time());
-                $track_table = 'track_e_attempt';
-                $query = "SELECT count(distinct(question_id)) ".
-                    " FROM ".$track_table.
-                    " WHERE DATE_ADD(tms, ".
-                    "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
-                //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
-                $res = $dbh->query($query);
-                if ($res === false) {
-                    $num = 0;
-                } else {
+            if (!empty($_configuration['user']) && !empty($_configuration['main_database'])) {
+                $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
+                try {
+                    $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
+                } catch (PDOException $e) {
+                    error_log('Failed to connect to database: '.$e->getMessage());
+                    continue;
+                }
+                if ($inc !== false && $dbh !== false) {
+                    $sql = "SELECT CONCAT(UTC_DATE(),' ',UTC_TIME())";
+                    $res = $dbh->query($sql);
                     $row = $res->fetch();
-                    $num = $row[0];
+                    $current_date = $row[0];
+                    //$current_date=date('Y-m-d H:i:s',time());
+                    $track_table = 'track_e_attempt';
+                    $query = "SELECT count(distinct(question_id)) ".
+                        " FROM ".$track_table.
+                        " WHERE DATE_ADD(tms, ".
+                        "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
+                    //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
+                    $res = $dbh->query($query);
+                    if ($res === false) {
+                        $num = 0;
+                    } else {
+                        $row = $res->fetch();
+                        $num = $row[0];
+                    }
+                    $cut_point = 7;
+                    if (substr($_configuration['root_web'], 0, 5) == 'https') {
+                        $cut_point = 8;
+                    }
+                    $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
+                    $match_count += $num;
                 }
-                $cut_point = 7;
-                if (substr($_configuration['root_web'], 0, 5) == 'https') {
-                    $cut_point = 8;
-                }
-                $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
-                $match_count += $num;
             }
         }
     }

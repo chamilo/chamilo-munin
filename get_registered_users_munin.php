@@ -110,28 +110,30 @@ function get_registrations($bd, $sub)
                 continue;
             }
             $inc = include_once($config_file);
-            $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
-            try {
-                $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
-            } catch (PDOException $e) {
-                error_log('Failed to connect to database: '.$e->getMessage());
-                continue;
-            }
-            if ($inc !== false && $dbh !== false) {
-                $query = "SELECT count(user_id) FROM user";
-                $res = $dbh->query($query);
-                if ($res === false) {
-                    $num = 0;
-                } else {
-                    $row = $res->fetch();
-                    $num = $row[0];
+            if (!empty($_configuration['user']) && !empty($_configuration['main_database'])) {
+                $dsn = 'mysql:dbname='.$_configuration['main_database'].';host='.$_configuration['db_host'];
+                try {
+                    $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
+                } catch (PDOException $e) {
+                    error_log('Failed to connect to database: '.$e->getMessage());
+                    continue;
                 }
-                $cut_point = 7;
-                if (substr($_configuration['root_web'], 0, 5) == 'https') {
-                    $cut_point = 8;
+                if ($inc !== false && $dbh !== false) {
+                    $query = "SELECT count(user_id) FROM user";
+                    $res = $dbh->query($query);
+                    if ($res === false) {
+                        $num = 0;
+                    } else {
+                        $row = $res->fetch();
+                        $num = $row[0];
+                    }
+                    $cut_point = 7;
+                    if (substr($_configuration['root_web'], 0, 5) == 'https') {
+                        $cut_point = 8;
+                    }
+                    $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
+                    $match_count += $num;
                 }
-                $connections[str_replace('.', '_', substr($_configuration['root_web'], $cut_point, -1))] = $num;
-                $match_count += $num;
             }
         }
     }
