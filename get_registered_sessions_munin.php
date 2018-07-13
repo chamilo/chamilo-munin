@@ -115,7 +115,7 @@ function get_sessions($bd, $sub)
                 try {
                     $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
                 } catch (PDOException $e) {
-                    error_log('Failed to connect to database: '.$e->getMessage());
+                    error_log('Failed to connect to database '.$_configuration['main_database'].': '.$e->getMessage().' in '.$bd.'/'.$dir.$sub);
                     continue;
                 }
                 if ($inc !== false && $dbh !== false) {

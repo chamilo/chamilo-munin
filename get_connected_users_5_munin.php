@@ -119,7 +119,7 @@ function get_connections($bd, $sub, $last_connect_minutes)
                 try {
                     $dbh = new PDO($dsn, $_configuration['db_user'], $_configuration['db_password']);
                 } catch (PDOException $e) {
-                    error_log('Failed to connect to database '.$_configuration['main_database'].': '.$e->getMessage());
+                    error_log('Failed to connect to database '.$_configuration['main_database'].': '.$e->getMessage().' in '.$bd.'/'.$dir.$sub);
                     continue;
                 }
                 if ($inc !== false && $dbh !== false) {
