@@ -133,7 +133,7 @@ function get_connections($bd, $sub, $last_connect_minutes)
                     $current_date = $row[0];
                     //$current_date=date('Y-m-d H:i:s',time());
                     $track_table = 'track_e_attempt';
-                    $query = "SELECT count(distinct(question_id)) ".
+                    $query = "SELECT count(question_id) ".
                         " FROM ".$track_table.
                         " WHERE DATE_ADD(tms, ".
                         "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
