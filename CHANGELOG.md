@@ -1,6 +1,14 @@
-Chamilo Munin 2.2 (20190920)
+Chamilo Munin 2.4 (20190920)
 ============================
 * Add check for subdirectories exclusions from tracking
+
+Chamilo Munin 2.3 (20180713)
+============================
+* Fix damaging typo in previous release
+
+Chamilo Munin 2.2 (20180713)
+============================
+* Increased error management
 
 Chamilo Munin 2.1 (20170619)
 ============================
