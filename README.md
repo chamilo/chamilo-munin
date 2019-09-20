@@ -163,6 +163,14 @@ a munin-run command and get results:
 If you got this, then it is likely all your scripts will start drawing charts 
 in the next 5-10 minutes. Well done!
 
+## Exclusions ##
+
+By default, this plugin assumes all Chamilo portals are in 
+/var/www/[domain]/www, and it gets and tracks all of them. To exclude some of
+those directories from tracking, use the exclusions.conf file 
+(exclusions.dist.conf provided as a template) and define each subdirectory you
+want to exclude on its own line.
+
 ## Notes ##
 
 The Virtual Chamilo plugin is not supported by this module. As such, if a portal using Virtual Chamilo is detected

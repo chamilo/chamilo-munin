@@ -14,6 +14,9 @@ $cmd = 'ln -s %s %s';
 if (!is_file($dest.'/_testchamiloplugin')) {
     die('Cannot write in '.$dest."\n");
 }
+if (is_file($cwd.'/exclusions.dist.conf') && !is_file($cwd.'/exclusions.conf')) {
+    @copy($cwd.'/exclusions.dist.conf', $cwd.'/exclusions.conf');
+}
 $list = scandir(__DIR__);
 /**
  * Add links

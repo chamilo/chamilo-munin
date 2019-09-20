@@ -1,3 +1,7 @@
+Chamilo Munin 2.2 (20190920)
+============================
+* Add check for subdirectories exclusions from tracking
+
 Chamilo Munin 2.1 (20170619)
 ============================
 * Use PDO for database connections to avoid issues with PHP 7.1
