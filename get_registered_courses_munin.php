@@ -90,7 +90,10 @@ function get_courses($bd, $sub)
     $exclusions = array();
     $exclusionsFile = __DIR__.'/exclusions.conf';
     if (is_file($exclusionsFile) && is_readable($exclusionsFile)) {
-        $exclusions = file($exclusionsFile, FILE_SKIP_EMPTY_LINES && FILE_IGNORE_NEW_LINES);
+        $exclusions = file($exclusionsFile, FILE_SKIP_EMPTY_LINES);
+        foreach ($exclusions as $i => $exclusion) {
+            $exclusions[$i] = trim($exclusion);
+        }
     }
     $list = scandir($bd);
     foreach ($list as $dir) {
