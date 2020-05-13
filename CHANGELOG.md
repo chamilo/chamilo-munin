@@ -1,3 +1,7 @@
+Chamilo Munin 2.5 (20200512)
+============================
+* Add assignments and document downloads charts
+
 Chamilo Munin 2.4 (20190920)
 ============================
 * Add check for subdirectories exclusions from tracking

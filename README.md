@@ -69,18 +69,22 @@ the following inside it (we need to execute each script every 5 minutes to give
 valuable data to Munin, and we want to do that a little bit before the rounded
 5 minutes to ensure the data is ready when Munin fetches it):
 
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php config
-    3,8,13,18,23,28,33,38,43,48,53,58 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_connected_users_5_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_courses_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_users_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_registered_sessions_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_answers_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_assignments_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_assignments_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_document_downloads_munin.php
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_document_downloads_munin.php config
+    */5 * * * *	munin /usr/local/share/chamilo-munin/get_live_exam_users_munin.php
 
 Each time, we also call the "config" part of the plugin. Although this is not 
 something that changes very often, it just writes an "almost-static" 1-10KB file
