@@ -59,7 +59,7 @@ if (!empty($argv[1]) && $argv[1] == 'config') {
     $output .= "graph_args --lower-limit 0\n";
     $output .= "graph_category chamilo\n";
     $output .= "graph_info This graph shows the number of assignments uploaded on Chamilo portals over time.\n";
-    $output .= "graph_vlabel Users in last $last_connect_minutes min\n";
+    $output .= "graph_vlabel Assignments in last $last_connect_minutes min\n";
     $output .= "graph_scale off\n";
     $total = 0;
     foreach ($connections as $portal => $num) {
@@ -143,19 +143,12 @@ function get_connections($bd, $sub, $last_connect_minutes)
                     $res = $dbh->query($sql);
                     $row = $res->fetch();
                     $current_date = $row[0];
-                    $track_table = 'track_e_exercices';
-                    // Make sure the right table is selected (exercices in 1.9.* and exercises after)
-                    $vc = version_compare($_configuration['system_version'], '1.10.0');
-                    if ($vc >= 0) {
-                        $track_table = 'c_student_publication';
-                    }
-                    //$current_date=date('Y-m-d H:i:s',time());
+                    $track_table = 'c_student_publication';
                     $query = "SELECT count(iid) ".
                         " FROM ".$track_table.
                         " WHERE filetype = 'file' ".
                         " AND DATE_ADD(sent_date, ".
                         "INTERVAL $last_connect_minutes MINUTE) >= '".$current_date."'  ";
-                    //"INTERVAL $last_connect_minutes MINUTE) >= NOW()  ";
                     $res = $dbh->query($query);
                     if ($res === false) {
                         $num = 0;
